@@ -4,6 +4,7 @@ import { chain } from "lodash";
 export type AutoProviderOptions = {
   name?: string;
   path: string[];
+  export?: boolean;
 }
 
 export function AutoProvider(options: AutoProviderOptions): ClassDecorator {
@@ -23,5 +24,12 @@ export function AutoProvider(options: AutoProviderOptions): ClassDecorator {
       ...(Reflect.getMetadata("providers", target) || []),
       ...providers,
     ], target);
+
+    if (options.export) {
+      Reflect.defineMetadata("exports", [
+        ...(Reflect.getMetadata("exports", target) || []),
+        ...providers,
+      ], target);
+    }
   };
 }
