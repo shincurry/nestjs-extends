@@ -1,12 +1,34 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import { AutoControllerModule } from '../../src';
+import { Controller, INestApplication, Module } from '@nestjs/common';
+import { AutoController } from '../../src';
 import path from 'path';
 import request from 'supertest';
 import { AController } from './controllers/A.controller';
 import { BController } from './controllers/B.controller';
 import { AClass } from './classes/AClass';
+
+@Controller('extra')
+export class ExtraController {}
+
+@AutoController({
+  name: "TestControllers",
+  path: [
+    path.join(__dirname, "./controllers/*.js"),
+  ],
+})
+@AutoController({
+  name: "TestClasses",
+  path: [
+    path.join(__dirname, "./classes/*.js"),
+  ],
+})
+@Module({
+  controllers: [
+    ExtraController,
+  ]
+})
+class TestAutoControllerModule {}
 
 describe('AutoControllerModule', () => {
   let app: INestApplication;
@@ -14,18 +36,7 @@ describe('AutoControllerModule', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
-        AutoControllerModule.forRoot({
-          name: "TestControllers",
-          path: [
-            path.join(__dirname, "./controllers/*.js"),
-          ],
-        }),
-        AutoControllerModule.forRoot({
-          name: "TestClasses",
-          path: [
-            path.join(__dirname, "./classes/*.js"),
-          ],
-        }),
+        TestAutoControllerModule,
       ],
     }).compile();
 

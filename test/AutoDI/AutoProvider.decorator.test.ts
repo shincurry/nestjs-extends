@@ -1,11 +1,34 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { Test } from '@nestjs/testing';
-import { INestApplication, Logger } from '@nestjs/common';
-import { AutoProviderModule } from '../../src';
+import { INestApplication, Injectable, Logger, Module } from '@nestjs/common';
+import { AutoProvider } from '../../src';
 import path from 'path';
 import { AClass } from './classes/AClass';
 import { AService } from './services/A.service';
 import { BService } from './services/B.service';
+
+@Injectable()
+export class ExtraService {
+}
+
+@AutoProvider({
+  name: "TestService",
+  path: [
+    path.join(__dirname, "./services/*.js"),
+  ],
+})
+@AutoProvider({
+  name: "TestClasses",
+  path: [
+    path.join(__dirname, "./classes/*.js"),
+  ],
+})
+@Module({
+  providers: [
+    ExtraService,
+  ]
+})
+class TestAutoProviderModule {}
 
 describe('AutoProviderModule', () => {
   let app: INestApplication;
@@ -13,22 +36,11 @@ describe('AutoProviderModule', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
-        AutoProviderModule.forRoot({
-          name: "TestService",
-          path: [
-            path.join(__dirname, "./services/*.js"),
-          ],
-        }),
-        AutoProviderModule.forRoot({
-          name: "TestClasses",
-          path: [
-            path.join(__dirname, "./classes/*.js"),
-          ],
-        }),
+        TestAutoProviderModule,
       ],
     }).compile();
 
-    app = moduleRef.createNestApplication();
+    app = moduleRef.createNestApplication({ logger: false });
     await app.init();
   });
 

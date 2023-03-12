@@ -1,2 +1,2 @@
 export * from './Yup';
-export * from './AutoModule';
+export * from './AutoDI';
