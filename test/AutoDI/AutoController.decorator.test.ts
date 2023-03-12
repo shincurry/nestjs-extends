@@ -12,13 +12,11 @@ import { AClass } from './classes/AClass';
 export class ExtraController {}
 
 @AutoController({
-  name: "TestControllers",
   path: [
     path.join(__dirname, "./controllers/*.js"),
   ],
 })
 @AutoController({
-  name: "TestClasses",
   path: [
     path.join(__dirname, "./classes/*.js"),
   ],
@@ -30,6 +28,12 @@ export class ExtraController {}
 })
 class TestAutoControllerModule {}
 
+@AutoController({
+  path: [],
+})
+@Module({})
+class EmptyTestAutoControllerModule {}
+
 describe('AutoControllerModule', () => {
   let app: INestApplication;
 
@@ -37,6 +41,7 @@ describe('AutoControllerModule', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
         TestAutoControllerModule,
+        EmptyTestAutoControllerModule,
       ],
     }).compile();
 

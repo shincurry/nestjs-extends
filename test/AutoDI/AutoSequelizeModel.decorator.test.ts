@@ -54,13 +54,13 @@ describe('AutoSequelizeModelModule', () => {
     const CONNECTION_NAME = "custom_connection"
 
     @AutoSequelizeModel({
-      name: CONNECTION_NAME,
+      connection: CONNECTION_NAME,
       path: [
         path.join(__dirname, "./models/**/*.js"),
       ],
     })
     @AutoSequelizeModel({
-      name: CONNECTION_NAME,
+      connection: CONNECTION_NAME,
       path: [
         path.join(__dirname, "./classes/*.js"),
       ],

@@ -11,14 +11,16 @@ import { BService } from './services/B.service';
 export class ExtraService {
 }
 
+@Injectable()
+export class Extra2Service {
+}
+
 @AutoProvider({
-  name: "TestService",
   path: [
     path.join(__dirname, "./services/*.js"),
   ],
 })
 @AutoProvider({
-  name: "TestClasses",
   path: [
     path.join(__dirname, "./classes/*.js"),
   ],
@@ -30,6 +32,25 @@ export class ExtraService {
 })
 class TestAutoProviderModule {}
 
+@AutoProvider({
+  path: [
+    path.join(__dirname, "./services/*.js"),
+  ],
+  export: true,
+})
+@Module({
+  providers: [
+    Extra2Service,
+  ]
+})
+class TestExportAutoProviderModule {}
+
+@AutoProvider({
+  path: [],
+})
+@Module({})
+class TestEmptyAutoProviderModule {}
+
 describe('AutoProviderModule', () => {
   let app: INestApplication;
 
@@ -37,6 +58,8 @@ describe('AutoProviderModule', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
         TestAutoProviderModule,
+        TestExportAutoProviderModule,
+        TestEmptyAutoProviderModule,
       ],
     }).compile();
 

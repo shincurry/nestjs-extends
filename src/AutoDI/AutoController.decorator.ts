@@ -2,7 +2,6 @@ import glob from 'glob';
 import { chain } from "lodash";
 
 export type AutoControllerOptions = {
-  name?: string;
   path: string[];
 }
 

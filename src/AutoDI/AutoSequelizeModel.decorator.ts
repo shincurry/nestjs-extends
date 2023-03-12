@@ -5,13 +5,13 @@ import { chain } from "lodash";
 import { Model } from "sequelize-typescript";
 
 export type AutoSequelizeModelOptions = {
-  name?: string;
+  connection?: string;
   path: string[];
 }
 
 export function AutoSequelizeModel(options: AutoSequelizeModelOptions): ClassDecorator {
   return (target: Function) => {
-    const name = options.name || DEFAULT_CONNECTION_NAME;
+    const name = options.connection || DEFAULT_CONNECTION_NAME;
 
     const models: any[] = chain(options.path)
       .map((i) => glob.sync(i))
