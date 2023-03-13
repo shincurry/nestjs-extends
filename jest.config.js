@@ -9,4 +9,5 @@ module.exports = {
     "^.+\\.js$": "babel-jest",
     "^.+\\.ts$": "ts-jest",
   },
+  "reporters": ["default", "jest-junit"],
 };
