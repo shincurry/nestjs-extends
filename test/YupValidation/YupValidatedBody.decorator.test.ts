@@ -1,7 +1,7 @@
 import { beforeEach, describe, it } from '@jest/globals';
 import { Test } from '@nestjs/testing';
 import { Controller, INestApplication, Post } from '@nestjs/common';
-import { YupValidatedBody } from '../../src/Yup';
+import { YupValidatedBody } from '../../src';
 import * as Yup from 'yup';
 import request from 'supertest';
 

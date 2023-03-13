@@ -1,2 +1,2 @@
-export * from './Yup';
+export * from './YupValidation';
 export * from './AutoDI';
