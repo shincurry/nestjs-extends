@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import { chain } from "lodash";
 
 export type AutoProviderOptions = {
@@ -9,7 +9,7 @@ export type AutoProviderOptions = {
 export function AutoProvider(options: AutoProviderOptions): ClassDecorator {
   return (target: Function) => {
     const providers: any[] = chain(options.path)
-      .map((i) => glob.sync(i))
+      .map((i) => globSync(i))
       .flatten()
       .map((path) => require(path))
       .map((i: any): any[] => {
