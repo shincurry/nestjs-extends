@@ -8,7 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "outDir": "./lib",
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
