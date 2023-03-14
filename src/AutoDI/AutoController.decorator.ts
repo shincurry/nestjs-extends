@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import { chain } from "lodash";
 
 export type AutoControllerOptions = {
@@ -8,7 +8,7 @@ export type AutoControllerOptions = {
 export function AutoController(options: AutoControllerOptions): ClassDecorator {
   return (target: Function) => {
     const controllers: any[] = chain(options.path)
-      .map((i) => glob.sync(i))
+      .map((i) => globSync(i))
       .flatten()
       .map((path) => require(path))
       .map((i: any): any[] => {
