@@ -1,0 +1,26 @@
+name: Build library
+
+on:
+  push:
+    branches: [ main ]
+  pull_request_target:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'yarn'
+
+    # yarn install
+    - name: Install
+      run: yarn install
+
+    # build library
+    - name: Build
+      run: yarn build
