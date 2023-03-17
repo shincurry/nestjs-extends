@@ -4,6 +4,11 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
+  "homepage": "https://shincurry.github.io/nestjs-extends/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shincurry/nestjs-extends.git"
+  },
   "scripts": {
     "clean": "rimraf lib",
     "build": "tsc -p tsconfig.json",
