@@ -1,6 +1,7 @@
 import { SequelizeModule } from "@nestjs/sequelize";
 import { globSync } from 'glob';
 import { chain } from "lodash";
+import { addExportToModule, addImportsToModule, addImportToModule } from "../Utils/NestModuleHelper";
 
 export type AutoSequelizeModelOptions = {
   connection?: string;
@@ -27,16 +28,10 @@ export function AutoSequelizeModel(options: AutoSequelizeModelOptions): ClassDec
 
     const module = SequelizeModule.forFeature(models, name);
 
-    Reflect.defineMetadata("imports", [
-      ...(Reflect.getMetadata("imports", target) || []),
-      module,
-    ], target);
+    addImportToModule(target, module);
 
     if (options.export) {
-      Reflect.defineMetadata("exports", [
-        ...(Reflect.getMetadata("exports", target) || []),
-        module.module,
-      ], target);
+      addExportToModule(target, module.module);
     }
   };
 }

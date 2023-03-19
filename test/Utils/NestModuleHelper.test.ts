@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { Controller, Module } from '@nestjs/common';
-import { addControllersToModule, addControllerToModule, addImportsToModule, addImportToModule, addProvidersToModule, addProviderToModule } from '../../src/Utils/NestModuleHelper';
+import { addControllersToModule, addControllerToModule, addExportsToModule, addExportToModule, addImportsToModule, addImportToModule, addProvidersToModule, addProviderToModule } from '../../src/Utils/NestModuleHelper';
 
 
 describe('NestModuleHelper', () => {
@@ -105,6 +105,42 @@ describe('NestModuleHelper', () => {
     expect(imports.length).toBe(2);
     expect(imports[0]).toBe(Module1);
     expect(imports[1]).toBe(Module2);
+
+  });
+
+  it(`test addExportToModule`, () => {
+    @Module({})
+    class Module1 {}
+
+    @Module({})
+    class TestModule {}
+
+    addExportToModule(TestModule, Module1)
+
+    const exports = Reflect.getOwnMetadata("exports", TestModule);
+    expect(exports.length).toBe(1);
+    expect(exports[0]).toBe(Module1);
+
+  });
+  it(`test addExportsToModule`, () => {
+    @Module({})
+    class Module1 {}
+    @Module({})
+    class Module2 {}
+
+    @Module({
+    })
+    class TestModule {}
+
+    addExportsToModule(TestModule, [
+      Module1,
+      Module2,
+    ])
+
+    const exports = Reflect.getOwnMetadata("exports", TestModule);
+    expect(exports.length).toBe(2);
+    expect(exports[0]).toBe(Module1);
+    expect(exports[1]).toBe(Module2);
 
   });
 

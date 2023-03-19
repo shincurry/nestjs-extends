@@ -58,12 +58,17 @@ describe('AutoSequelizeModelModule', () => {
       path: [
         path.join(__dirname, "./models/**/*.js"),
       ],
+      export: true,
     })
     @AutoSequelizeModel({
       connection: CONNECTION_NAME,
       path: [
         path.join(__dirname, "./classes/*.js"),
       ],
+    })
+    @AutoSequelizeModel({
+      connection: CONNECTION_NAME,
+      path: [],
     })
     @Module({
       imports: [
@@ -90,5 +95,43 @@ describe('AutoSequelizeModelModule', () => {
 
     const models = EntitiesMetadataStorage.getEntitiesByConnection(CONNECTION_NAME)
     expect(models.sort()).toStrictEqual([User, Project].sort());
+  });
+
+  it(`test empty models`, async () => {
+
+    @AutoSequelizeModel({
+      path: [],
+      export: true,
+    })
+    @Module({})
+    class TestEmptyAutoSequelizeModelModule {}
+
+    @AutoSequelizeModel({
+      path: [],
+      export: true,
+    })
+    @Module({
+      imports: [
+        TestEmptyAutoSequelizeModelModule,
+        SequelizeModule.forRootAsync({
+          useFactory: () => {
+            return {
+              dialect: 'postgres',
+            }
+          }
+        })
+      ],
+    })
+    class TestAutoSequelizeModelModule3 {}
+
+    const moduleRef = await Test.createTestingModule({
+      imports: [
+        TestAutoSequelizeModelModule3,
+      ],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+    await app.init();
+
   });
 });

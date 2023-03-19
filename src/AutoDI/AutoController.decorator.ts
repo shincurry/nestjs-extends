@@ -1,5 +1,6 @@
 import { globSync } from 'glob';
 import { chain } from "lodash";
+import { addControllersToModule } from '../Utils/NestModuleHelper';
 
 export type AutoControllerOptions = {
   path: string[];
@@ -18,9 +19,6 @@ export function AutoController(options: AutoControllerOptions): ClassDecorator {
       .filter((i) => typeof i === 'function' && Reflect.getOwnMetadataKeys(i).includes('__controller__'))
       .value();
 
-    Reflect.defineMetadata("controllers", [
-      ...(Reflect.getMetadata("controllers", target) || []),
-      ...controllers,
-    ], target);
+    addControllersToModule(target, controllers);
   };
 }

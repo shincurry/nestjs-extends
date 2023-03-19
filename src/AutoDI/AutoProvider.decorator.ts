@@ -1,5 +1,6 @@
 import { globSync } from 'glob';
 import { chain } from "lodash";
+import { addExportsToModule, addProvidersToModule } from '../Utils/NestModuleHelper';
 
 export type AutoProviderOptions = {
   path: string[];
@@ -19,16 +20,10 @@ export function AutoProvider(options: AutoProviderOptions): ClassDecorator {
       .filter((i) => typeof i === 'function' && Reflect.getOwnMetadataKeys(i).includes('__injectable__'))
       .value();
 
-    Reflect.defineMetadata("providers", [
-      ...(Reflect.getMetadata("providers", target) || []),
-      ...providers,
-    ], target);
+    addProvidersToModule(target, providers);
 
     if (options.export) {
-      Reflect.defineMetadata("exports", [
-        ...(Reflect.getMetadata("exports", target) || []),
-        ...providers,
-      ], target);
+      addExportsToModule(target, providers);
     }
   };
 }
