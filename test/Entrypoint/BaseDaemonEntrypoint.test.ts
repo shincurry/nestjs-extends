@@ -15,7 +15,7 @@ class TestDaemon extends BaseDaemonEntrypoint {
 
 describe('BaseDaemonEntrypoint', () => {
   it(`test run app based on BaseDaemonEntrypoint.`, async () => {
-    const context = await TestDaemon.createApp(TestDaemonModule, { logger: false });
+    const context = await TestDaemon.bootstrap(TestDaemonModule, { logger: false });
     await context.close();
   });
 });

@@ -13,7 +13,7 @@ class TestHttpServer extends BaseHttpServerEntrypoint {
 
 describe('BaseHttpServerEntrypoint', () => {
   it(`test run app based on BaseEntrypoint.`, async () => {
-    const app = await TestHttpServer.boostrap(TestHttpServerModule, { logger: false });
+    const app = await TestHttpServer.bootstrap(TestHttpServerModule, { logger: false });
     await app.close();
   });
 });

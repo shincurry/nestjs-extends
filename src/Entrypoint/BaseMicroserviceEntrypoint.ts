@@ -11,7 +11,7 @@ export abstract class BaseMicroserviceEntrypoint extends BaseEntrypoint {
 
   onApplicationListened(): void {}
 
-  static async boostrap<T extends MicroserviceOptions>(module: ModuleClass, options?: NestApplicationContextOptions & T) {
+  static async bootstrap<T extends MicroserviceOptions>(module: ModuleClass, options?: NestApplicationContextOptions & T) {
     // 0. Dependency inject: entrypoint class
     addProviderToModule(module, this as any);
 

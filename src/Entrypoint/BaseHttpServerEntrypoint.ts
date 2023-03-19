@@ -13,7 +13,7 @@ export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint {
 
   onApplicationListened(): void {}
 
-  static async boostrap(module: ModuleClass, options?: NestApplicationContextOptions) {
+  static async bootstrap(module: ModuleClass, options?: NestApplicationContextOptions) {
     // 0. Dependency inject: entrypoint class
     addProviderToModule(module, this as any);
 

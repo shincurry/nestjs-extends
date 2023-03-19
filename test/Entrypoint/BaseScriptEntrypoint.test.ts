@@ -15,6 +15,6 @@ class TestEntrypoint extends BaseScriptEntrypoint {
 
 describe('BaseScriptEntrypoint', () => {
   it(`test run app based on BaseScriptEntrypoint.`, async () => {
-    await TestEntrypoint.createApp(TestScriptModule, { logger: false });
+    await TestEntrypoint.bootstrap(TestScriptModule, { logger: false });
   });
 });

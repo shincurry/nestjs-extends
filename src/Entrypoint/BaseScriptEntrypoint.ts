@@ -9,7 +9,7 @@ export abstract class BaseScriptEntrypoint extends BaseEntrypoint {
 
   public abstract execute(): void;
 
-  static async createApp(module: ModuleClass, options?: NestApplicationContextOptions) {
+  static async bootstrap(module: ModuleClass, options?: NestApplicationContextOptions) {
     // 0. Dependency inject: entrypoint class
     addProviderToModule(module, this as any);
 

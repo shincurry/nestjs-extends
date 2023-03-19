@@ -12,7 +12,7 @@ class TestMicroservice extends BaseMicroserviceEntrypoint {
 
 describe('BaseMicroserviceEntrypoint', () => {
   it(`test run app based on BaseMicroserviceEntrypoint.`, async () => {
-    const app = await TestMicroservice.boostrap(TestMicroserviceModule, {
+    const app = await TestMicroservice.bootstrap(TestMicroserviceModule, {
       transport: Transport.TCP,
       options: {
         host: '0.0.0.0',

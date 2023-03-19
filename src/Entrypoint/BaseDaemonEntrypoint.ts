@@ -9,7 +9,7 @@ export abstract class BaseDaemonEntrypoint extends BaseEntrypoint {
 
   public abstract main(): void;
 
-  static async createApp(module: ModuleClass, options?: NestApplicationContextOptions) {
+  static async bootstrap(module: ModuleClass, options?: NestApplicationContextOptions) {
     // 0. Dependency inject: entrypoint class
     addProviderToModule(module, this as any);
 
