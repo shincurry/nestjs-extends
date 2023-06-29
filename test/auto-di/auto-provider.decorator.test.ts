@@ -4,8 +4,8 @@ import { INestApplication, Injectable, Logger, Module } from '@nestjs/common';
 import { AutoProvider } from '../../src';
 import path from 'path';
 import { AClass } from './classes/a-class';
-import { AService } from './services/A.service';
-import { BService } from './services/B.service';
+import { AService } from './services/a.service';
+import { BService } from './services/b.service';
 
 @Injectable()
 export class ExtraService {
