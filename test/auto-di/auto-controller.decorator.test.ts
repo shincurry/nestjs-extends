@@ -4,8 +4,8 @@ import { Controller, INestApplication, Module } from '@nestjs/common';
 import { AutoController } from '../../src';
 import path from 'path';
 import request from 'supertest';
-import { AController } from './controllers/A.controller';
-import { BController } from './controllers/B.controller';
+import { AController } from './controllers/a.controller';
+import { BController } from './controllers/b.controller';
 import { AClass } from './classes/a-class';
 
 @Controller('extra')

@@ -1,6 +1,6 @@
 import { describe, it } from '@jest/globals';
 import { Injectable, Module } from '@nestjs/common';
-import { BaseDaemonEntrypoint, BaseScriptEntrypoint } from '../../src';
+import { BaseDaemonEntrypoint } from '../../src';
 
 @Module({})
 class TestDaemonModule {}
