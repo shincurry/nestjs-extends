@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { Controller, Module } from '@nestjs/common';
-import { addControllersToModule, addControllerToModule, addExportsToModule, addExportToModule, addImportsToModule, addImportToModule, addProvidersToModule, addProviderToModule } from '../../src/Utils/NestModuleHelper';
+import { addControllersToModule, addControllerToModule, addExportsToModule, addExportToModule, addImportsToModule, addImportToModule, addProvidersToModule, addProviderToModule } from '../../src/utils/nestmodule-helper';
 
 
 describe('NestModuleHelper', () => {

@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { INestApplication, Injectable, Logger, Module } from '@nestjs/common';
 import { AutoProvider } from '../../src';
 import path from 'path';
-import { AClass } from './classes/AClass';
+import { AClass } from './classes/a-class';
 import { AService } from './services/A.service';
 import { BService } from './services/B.service';
 

@@ -1,13 +1,13 @@
 import { INestApplicationContext } from "@nestjs/common";
 import { NestApplicationContextOptions } from "@nestjs/common/interfaces/nest-application-context-options.interface";
 import { NestFactory } from "@nestjs/core";
-import { addProviderToModule, ModuleClass } from "../Utils/NestModuleHelper";
-import { BaseEntrypoint } from "./BaseEntrypoint";
+import { addProviderToModule, ModuleClass } from "../utils/nestmodule-helper";
+import { BaseEntrypoint } from "./base-entrypoint";
 
-export abstract class BaseDaemonEntrypoint extends BaseEntrypoint {
+export abstract class BaseScriptEntrypoint extends BaseEntrypoint {
   protected context!: INestApplicationContext;
 
-  public abstract main(): void;
+  public abstract execute(): void;
 
   static async bootstrap(module: ModuleClass, options?: NestApplicationContextOptions) {
     // 0. Dependency inject: entrypoint class
@@ -19,9 +19,11 @@ export abstract class BaseDaemonEntrypoint extends BaseEntrypoint {
     const entrypoint = context.get(this);
     entrypoint.context = context;
 
-    // 2. run main function.
-    await entrypoint.main();
+    // 2. run execute function.
+    await entrypoint.execute();
 
-    return context;
+    // 3. Close context.
+    context.close();
   }
+
 }
