@@ -1,8 +1,8 @@
 import { INestApplication } from "@nestjs/common";
 import { NestApplicationContextOptions } from "@nestjs/common/interfaces/nest-application-context-options.interface";
 import { NestFactory } from "@nestjs/core";
-import { addProviderToModule, ModuleClass } from "../Utils/NestModuleHelper";
-import { BaseEntrypoint } from "./BaseEntrypoint";
+import { addProviderToModule, ModuleClass } from "../utils/nestmodule-helper";
+import { BaseEntrypoint } from "./base-entrypoint";
 
 export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint {
 

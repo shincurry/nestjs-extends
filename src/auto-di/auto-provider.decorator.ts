@@ -1,6 +1,6 @@
 import { globSync } from 'glob';
 import { chain } from "lodash";
-import { addExportsToModule, addProvidersToModule } from '../Utils/NestModuleHelper';
+import { addExportsToModule, addProvidersToModule } from '../utils/nestmodule-helper';
 
 export type AutoProviderOptions = {
   path: string[];

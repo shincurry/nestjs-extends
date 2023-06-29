@@ -1,6 +1,6 @@
 import { globSync } from 'glob';
 import { chain } from "lodash";
-import { addControllersToModule } from '../Utils/NestModuleHelper';
+import { addControllersToModule } from '../utils/nestmodule-helper';
 
 export type AutoControllerOptions = {
   path: string[];

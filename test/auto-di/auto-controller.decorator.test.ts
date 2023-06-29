@@ -6,7 +6,7 @@ import path from 'path';
 import request from 'supertest';
 import { AController } from './controllers/A.controller';
 import { BController } from './controllers/B.controller';
-import { AClass } from './classes/AClass';
+import { AClass } from './classes/a-class';
 
 @Controller('extra')
 export class ExtraController {}
