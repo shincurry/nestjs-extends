@@ -1,7 +1,7 @@
 import { SequelizeModule } from "@nestjs/sequelize";
-import { globSync } from 'glob';
+import { globSync } from 'fast-glob';
 import { chain } from "lodash";
-import { addExportToModule, addImportsToModule, addImportToModule } from "../utils/nestmodule-helper";
+import { addExportToModule, addImportToModule } from "../utils/nestmodule-helper";
 
 export type AutoSequelizeModelOptions = {
   connection?: string;

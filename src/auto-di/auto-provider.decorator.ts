@@ -1,4 +1,4 @@
-import { globSync } from 'glob';
+import { globSync } from 'fast-glob';
 import { chain } from "lodash";
 import { addExportsToModule, addProvidersToModule } from '../utils/nestmodule-helper';
 
