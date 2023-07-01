@@ -9,6 +9,11 @@ class TestHttpServerModule {}
 class TestHttpServer extends BaseHttpServerEntrypoint {
   host = "127.0.0.1";
   port = 19485;
+  constructor() {
+    super()
+    this.host = "127.0.0.1";
+    this.port = 19485;
+  }
 }
 
 describe('BaseHttpServerEntrypoint', () => {

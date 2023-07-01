@@ -1,4 +1,5 @@
-import { CacheModule, CacheModuleAsyncOptions, CacheModuleOptions, CACHE_MANAGER, DynamicModule, InjectionToken, Module } from "@nestjs/common";
+import { DynamicModule, InjectionToken, Module } from "@nestjs/common";
+import { CACHE_MANAGER, CacheModule, CacheModuleAsyncOptions, CacheModuleOptions } from "@nestjs/cache-manager";
 
 export type NamedCacheModuleOptions<StoreConfig extends Record<any, any> = Record<string, any>> = CacheModuleOptions<StoreConfig>
 export type NamedCacheModuleAsyncOptions<StoreConfig extends Record<any, any> = Record<string, any>> = CacheModuleAsyncOptions<StoreConfig>
