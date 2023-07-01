@@ -1,6 +1,6 @@
-import { SequelizeModule } from "@nestjs/sequelize";
 import { globSync } from 'fast-glob';
 import { chain } from "lodash";
+import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import { addExportToModule, addImportToModule } from "../utils/nestmodule-helper";
 
 export type AutoSequelizeModelOptions = {
@@ -16,6 +16,12 @@ const SEQUELIZE_MODEL_NAME_KEY = 'sequelize:modelName';
 
 export function AutoSequelizeModel(options: AutoSequelizeModelOptions): ClassDecorator {
   return (target: Function) => {
+    const NestSequelize = loadPackage(
+      '@nestjs/sequelize',
+      'NestSequelize',
+      () => require('@nestjs/sequelize'),
+    );
+
     const name = options.connection;
     const models: any[] = chain(options.path)
       .map((i) => globSync(i))
@@ -26,7 +32,7 @@ export function AutoSequelizeModel(options: AutoSequelizeModelOptions): ClassDec
       .filter((i) => typeof i === 'function' && Reflect.hasMetadata(SEQUELIZE_MODEL_NAME_KEY, i.prototype))
       .value();
 
-    const module = SequelizeModule.forFeature(models, name);
+    const module = NestSequelize.SequelizeModule.forFeature(models, name);
 
     addImportToModule(target, module);
 

@@ -1,6 +1,6 @@
 import { INestMicroservice } from "@nestjs/common";
 import { NestApplicationContextOptions } from "@nestjs/common/interfaces/nest-application-context-options.interface";
-import { MicroserviceOptions } from "@nestjs/microservices";
+import type { MicroserviceOptions } from "@nestjs/microservices";
 import { NestFactory } from "@nestjs/core";
 import { addProviderToModule, ModuleClass } from "../utils/nestmodule-helper";
 import { BaseEntrypoint } from "./base-entrypoint";

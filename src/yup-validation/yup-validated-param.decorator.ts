@@ -1,16 +1,23 @@
 import { createParamDecorator, ExecutionContext, HttpException, HttpStatus } from "@nestjs/common";
-import Yup, { ValidationError } from "yup";
+import type Yup from "yup";
+import { loadPackage } from '@nestjs/common/utils/load-package.util';
+
 
 export function YupValidatedParam<T extends any>(name: string, validationSchema: Yup.Schema<T>) {
   return createParamDecorator<T>(
     async (data, ctx: ExecutionContext) => {
+      const Yup = loadPackage(
+        'yup',
+        'Yup',
+        () => require('yup'),
+      ) as typeof import("yup");
       const request = ctx.switchToHttp().getRequest();
       const param = request.params[name];
       try {
         return await validationSchema.required().validate(param, { abortEarly: false });
       } catch (error) {
         /* istanbul ignore else */
-        if (error instanceof ValidationError) {
+        if (error instanceof Yup.ValidationError) {
           throw new HttpException({
             statusCode: HttpStatus.BAD_REQUEST,
             message: error.errors,
