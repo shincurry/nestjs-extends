@@ -7,7 +7,7 @@ import { BaseEntrypoint } from "./base-entrypoint";
 export abstract class BaseScriptEntrypoint extends BaseEntrypoint {
   protected context!: INestApplicationContext;
 
-  public abstract execute(): void;
+  public abstract execute(): Promise<void> | void;
 
   static async bootstrap(module: ModuleClass, options?: NestApplicationContextOptions) {
     // 0. Dependency inject: entrypoint class
@@ -18,6 +18,7 @@ export abstract class BaseScriptEntrypoint extends BaseEntrypoint {
     context.enableShutdownHooks();
     const entrypoint = context.get(this);
     entrypoint.context = context;
+    await entrypoint.onApplicationCreated();
 
     // 2. run execute function.
     await entrypoint.execute();

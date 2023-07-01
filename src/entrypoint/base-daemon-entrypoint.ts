@@ -18,6 +18,7 @@ export abstract class BaseDaemonEntrypoint extends BaseEntrypoint {
     context.enableShutdownHooks();
     const entrypoint = context.get(this);
     entrypoint.context = context;
+    await entrypoint.onApplicationCreated();
 
     // 2. run main function.
     await entrypoint.main();

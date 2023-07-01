@@ -1,15 +1,14 @@
 import { BeforeApplicationShutdown, OnApplicationBootstrap, OnApplicationShutdown, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
+import { OnApplicationCreated } from "./interface/on-application-created.interface";
 
 export abstract class BaseEntrypoint implements
-  OnModuleInit,
+  OnApplicationCreated,
   OnApplicationBootstrap,
-  OnModuleDestroy,
   BeforeApplicationShutdown,
   OnApplicationShutdown {
 
-  onModuleInit() {}
+  onApplicationCreated() {}
   onApplicationBootstrap() {}
-  onModuleDestroy() {}
   beforeApplicationShutdown(signal?: string | undefined) {}
   onApplicationShutdown(signal?: string | undefined) {}
 

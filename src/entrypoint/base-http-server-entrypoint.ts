@@ -3,15 +3,16 @@ import { NestApplicationContextOptions } from "@nestjs/common/interfaces/nest-ap
 import { NestFactory } from "@nestjs/core";
 import { addProviderToModule, ModuleClass } from "../utils/nestmodule-helper";
 import { BaseEntrypoint } from "./base-entrypoint";
+import { OnApplicationListened } from "./interface/on-application-listened.interface";
 
-export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint {
+export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint implements OnApplicationListened {
 
   protected host: string = "127.0.0.1";
   protected port: number = 9000;
 
   protected app!: INestApplication;
 
-  onApplicationListened(): void {}
+  onApplicationListened() {}
 
   static async bootstrap(module: ModuleClass, options?: NestApplicationContextOptions) {
     // 0. Dependency inject: entrypoint class
@@ -22,6 +23,7 @@ export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint {
     app.enableShutdownHooks();
     const entrypoint = app.get(this);
     entrypoint.app = app;
+    await entrypoint.onApplicationCreated();
 
     // 2. listen nest http server.
     const host = entrypoint.host;

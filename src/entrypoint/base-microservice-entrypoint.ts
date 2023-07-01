@@ -4,12 +4,13 @@ import type { MicroserviceOptions } from "@nestjs/microservices";
 import { NestFactory } from "@nestjs/core";
 import { addProviderToModule, ModuleClass } from "../utils/nestmodule-helper";
 import { BaseEntrypoint } from "./base-entrypoint";
+import { OnApplicationListened } from "./interface/on-application-listened.interface";
 
-export abstract class BaseMicroserviceEntrypoint extends BaseEntrypoint {
+export abstract class BaseMicroserviceEntrypoint extends BaseEntrypoint implements OnApplicationListened {
 
   protected microservice!: INestMicroservice;
 
-  onApplicationListened(): void {}
+  onApplicationListened() {}
 
   static async bootstrap<T extends MicroserviceOptions>(module: ModuleClass, options?: NestApplicationContextOptions & T) {
     // 0. Dependency inject: entrypoint class
@@ -20,6 +21,7 @@ export abstract class BaseMicroserviceEntrypoint extends BaseEntrypoint {
     microservice.enableShutdownHooks();
     const entrypoint = microservice.get(this);
     entrypoint.microservice = microservice;
+    await entrypoint.onApplicationCreated();
 
     // 2. listen nest http server.
     await microservice.listen();
