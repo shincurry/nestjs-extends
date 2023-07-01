@@ -6,8 +6,8 @@ import { BaseEntrypoint } from "./base-entrypoint";
 
 export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint {
 
-  protected abstract host: string;
-  protected abstract port: number;
+  protected host: string = "127.0.0.1";
+  protected port: number = 9000;
 
   protected app!: INestApplication;
 
