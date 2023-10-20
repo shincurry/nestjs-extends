@@ -1,12 +1,12 @@
 import { createParamDecorator, ExecutionContext, HttpException, HttpStatus } from "@nestjs/common";
 import type { Request } from "express";
-import type { ZodObject, ZodRawShape } from "zod";
+import type { AnyZodObject } from "zod";
 import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import { zodMessagesFromError } from "../utils/zod-error-messages";
 
 
-export function ZodValidatedBody<T extends ZodRawShape>(validationSchema: ZodObject<T>) {
-  return createParamDecorator<T>(
+export function ZodValidatedBody(validationSchema: AnyZodObject) {
+  return createParamDecorator(
     async (data, ctx: ExecutionContext) => {
       const Zod = loadPackage(
         'zod',
