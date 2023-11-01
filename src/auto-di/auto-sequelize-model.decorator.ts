@@ -1,5 +1,4 @@
 import { globSync } from 'fast-glob';
-import { chain } from "lodash";
 import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import { addExportToModule, addImportToModule } from "../utils/nestmodule-helper";
 
@@ -22,15 +21,22 @@ export function AutoSequelizeModel(options: AutoSequelizeModelOptions): ClassDec
       () => require('@nestjs/sequelize'),
     );
 
+
     const name = options.connection;
-    const models: any[] = chain(options.path)
-      .map((i) => globSync(i))
-      .flatten()
-      .map((path) => require(path))
-      .map((i: any): any[] => Object.values(i) as any[])
-      .flatten()
-      .filter((i) => typeof i === 'function' && Reflect.hasMetadata(SEQUELIZE_MODEL_NAME_KEY, i.prototype))
-      .value();
+    const models: any[] = []
+
+    for (const path of options.path) {
+      const filenames = globSync(path)
+      for (const filename of filenames) {
+        const Module = require(filename)
+        const Classes = Object.values(Module)
+        for (const Class of Classes) {
+          if (typeof Class === 'function' && Reflect.hasMetadata(SEQUELIZE_MODEL_NAME_KEY, Class.prototype)) {
+            models.push(Class)
+          }
+        }
+      }
+    }
 
     const module = NestSequelize.SequelizeModule.forFeature(models, name);
 

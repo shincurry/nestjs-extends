@@ -1,5 +1,4 @@
 import { globSync } from 'fast-glob';
-import { chain } from "lodash";
 import { addControllersToModule } from '../utils/nestmodule-helper';
 
 export type AutoControllerOptions = {
@@ -8,16 +7,20 @@ export type AutoControllerOptions = {
 
 export function AutoController(options: AutoControllerOptions): ClassDecorator {
   return (target: Function) => {
-    const controllers: any[] = chain(options.path)
-      .map((i) => globSync(i))
-      .flatten()
-      .map((path) => require(path))
-      .map((i: any): any[] => {
-        return Object.values(i) as any[]
-      })
-      .flatten()
-      .filter((i) => typeof i === 'function' && Reflect.getOwnMetadataKeys(i).includes('__controller__'))
-      .value();
+    const controllers: any[] = []
+
+    for (const path of options.path) {
+      const filenames = globSync(path)
+      for (const filename of filenames) {
+        const Module = require(filename)
+        const Classes = Object.values(Module)
+        for (const Class of Classes) {
+          if (typeof Class === 'function' && Reflect.getOwnMetadataKeys(Class).includes('__controller__')) {
+            controllers.push(Class)
+          }
+        }
+      }
+    }
 
     addControllersToModule(target, controllers);
   };

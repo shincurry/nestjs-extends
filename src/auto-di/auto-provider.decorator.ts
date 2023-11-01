@@ -1,5 +1,4 @@
 import { globSync } from 'fast-glob';
-import { chain } from "lodash";
 import { addExportsToModule, addProvidersToModule } from '../utils/nestmodule-helper';
 
 export type AutoProviderOptions = {
@@ -9,16 +8,20 @@ export type AutoProviderOptions = {
 
 export function AutoProvider(options: AutoProviderOptions): ClassDecorator {
   return (target: Function) => {
-    const providers: any[] = chain(options.path)
-      .map((i) => globSync(i))
-      .flatten()
-      .map((path) => require(path))
-      .map((i: any): any[] => {
-        return Object.values(i) as any[]
-      })
-      .flatten()
-      .filter((i) => typeof i === 'function' && Reflect.getOwnMetadataKeys(i).includes('__injectable__'))
-      .value();
+    const providers: any[] = []
+
+    for (const path of options.path) {
+      const filenames = globSync(path)
+      for (const filename of filenames) {
+        const Module = require(filename)
+        const Classes = Object.values(Module)
+        for (const Class of Classes) {
+          if (typeof Class === 'function' && Reflect.getOwnMetadataKeys(Class).includes('__injectable__')) {
+            providers.push(Class)
+          }
+        }
+      }
+    }
 
     addProvidersToModule(target, providers);
 
