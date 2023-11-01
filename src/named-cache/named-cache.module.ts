@@ -11,11 +11,7 @@ export class NamedCacheModule {
     name: InjectionToken,
     options: NamedCacheModuleOptions<StoreConfig>,
   ): DynamicModule {
-    const NestCacheManager = loadPackage(
-      '@nestjs/cache-manager',
-      'NestCacheManager',
-      () => require('@nestjs/cache-manager'),
-    );
+    const NestCacheManager = loadPackage('@nestjs/cache-manager', 'NamedCacheModule');
     const module = NestCacheManager.CacheModule.register(options)
     const provider = {
       provide: name,
@@ -32,11 +28,7 @@ export class NamedCacheModule {
     name: InjectionToken,
     options: NamedCacheModuleAsyncOptions<StoreConfig>,
   ): DynamicModule {
-    const NestCacheManager = loadPackage(
-      '@nestjs/cache-manager',
-      'NestCacheManager',
-      () => require('@nestjs/cache-manager'),
-    );
+    const NestCacheManager = loadPackage('@nestjs/cache-manager', 'NamedCacheModule');
     const module = NestCacheManager.CacheModule.registerAsync(options)
     const provider = {
       provide: name,

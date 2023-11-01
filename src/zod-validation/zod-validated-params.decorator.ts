@@ -7,11 +7,7 @@ import { zodMessagesFromError } from "../utils/zod-error-messages";
 export function ZodValidatedParams(validationSchema: AnyZodObject) {
   return createParamDecorator(
     async (data, ctx: ExecutionContext) => {
-      const Zod = loadPackage(
-        'zod',
-        'Zod',
-        () => require('zod'),
-      ) as typeof import("zod");
+      const Zod = loadPackage('zod', 'ZodValidatedParams') as typeof import("zod");
       const { ZodError } = Zod;
       const request = ctx.switchToHttp().getRequest();
       const params = request.params;

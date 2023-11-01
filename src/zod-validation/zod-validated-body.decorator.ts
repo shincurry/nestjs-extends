@@ -8,11 +8,7 @@ import { zodMessagesFromError } from "../utils/zod-error-messages";
 export function ZodValidatedBody(validationSchema: AnyZodObject) {
   return createParamDecorator(
     async (data, ctx: ExecutionContext) => {
-      const Zod = loadPackage(
-        'zod',
-        'Zod',
-        () => require('zod'),
-      ) as typeof import("zod");
+      const Zod = loadPackage('zod', 'ZodValidatedBody') as typeof import("zod");
       const { ZodError } = Zod;
       const request = ctx.switchToHttp().getRequest<Request>();
       const body = request.body;

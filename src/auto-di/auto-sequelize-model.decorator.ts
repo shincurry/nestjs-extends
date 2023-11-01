@@ -15,12 +15,7 @@ const SEQUELIZE_MODEL_NAME_KEY = 'sequelize:modelName';
 
 export function AutoSequelizeModel(options: AutoSequelizeModelOptions): ClassDecorator {
   return (target: Function) => {
-    const NestSequelize = loadPackage(
-      '@nestjs/sequelize',
-      'NestSequelize',
-      () => require('@nestjs/sequelize'),
-    );
-
+    const NestSequelize = loadPackage('@nestjs/sequelize', 'AutoSequelizeModel');
 
     const name = options.connection;
     const models: any[] = []

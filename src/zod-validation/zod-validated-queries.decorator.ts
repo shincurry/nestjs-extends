@@ -7,11 +7,7 @@ import type { AnyZodObject } from "zod";
 export function ZodValidatedQueries(validationSchema: AnyZodObject) {
   return createParamDecorator(
     async (data, ctx: ExecutionContext) => {
-      const Zod = loadPackage(
-        'zod',
-        'Zod',
-        () => require('zod'),
-      ) as typeof import("zod");
+      const Zod = loadPackage('zod', 'ZodValidatedQueries') as typeof import("zod");
       const { ZodError } = Zod;
       const request = ctx.switchToHttp().getRequest();
       const queries = request.query;
