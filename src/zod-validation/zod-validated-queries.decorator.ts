@@ -1,10 +1,10 @@
 import { createParamDecorator, ExecutionContext, HttpException, HttpStatus } from "@nestjs/common";
 import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import { zodMessagesFromError } from "../utils/zod-error-messages";
-import type { AnyZodObject } from "zod";
+import type { ZodTypeAny } from "zod";
 
 
-export function ZodValidatedQueries(validationSchema: AnyZodObject) {
+export function ZodValidatedQueries(validationSchema: ZodTypeAny) {
   return createParamDecorator(
     async (data, ctx: ExecutionContext) => {
       const Zod = loadPackage('zod', 'ZodValidatedQueries') as typeof import("zod");
