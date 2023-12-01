@@ -56,6 +56,6 @@
     "zod": "^3.21.4"
   },
   "dependencies": {
-    "fast-glob": "^3.3.1"
+    "fast-glob": "^3.3.2"
   }
 }
