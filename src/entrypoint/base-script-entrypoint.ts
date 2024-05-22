@@ -25,6 +25,9 @@ export abstract class BaseScriptEntrypoint extends BaseEntrypoint {
 
     // 3. Close context.
     context.close();
+
+    // 4. Exit process.
+    process.exit(0);
   }
 
 }

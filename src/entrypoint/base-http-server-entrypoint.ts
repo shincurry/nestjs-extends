@@ -5,12 +5,12 @@ import { addProviderToModule, ModuleClass } from "../utils/nestmodule-helper";
 import { BaseEntrypoint } from "./base-entrypoint";
 import { OnApplicationListened } from "./interface/on-application-listened.interface";
 
-export abstract class BaseHttpServerEntrypoint extends BaseEntrypoint implements OnApplicationListened {
+export abstract class BaseHttpServerEntrypoint<TServer = any> extends BaseEntrypoint implements OnApplicationListened {
 
   protected host: string = "127.0.0.1";
   protected port: number = 9000;
 
-  protected app!: INestApplication;
+  protected app!: INestApplication<TServer>;
 
   onApplicationListened() {}
 

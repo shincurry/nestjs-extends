@@ -1,4 +1,4 @@
-import { describe, it } from '@jest/globals';
+import { afterAll, describe, expect, it, jest } from '@jest/globals';
 import { Injectable, Module } from '@nestjs/common';
 import { BaseScriptEntrypoint } from '../../src';
 
@@ -13,8 +13,17 @@ class TestEntrypoint extends BaseScriptEntrypoint {
   }
 }
 
+const realProcessExit = process.exit;
+process.exit = jest.fn(() => { throw "mockExit"; });
+afterAll(() => { process.exit = realProcessExit; });
+
 describe('BaseScriptEntrypoint', () => {
   it(`test run app based on BaseScriptEntrypoint.`, async () => {
-    await TestEntrypoint.bootstrap(TestScriptModule, { logger: false });
+    try {
+      await TestEntrypoint.bootstrap(TestScriptModule, { logger: false });
+    } catch (error) {
+        expect(error).toBe("mockExit");
+        expect(process.exit).toBeCalledWith(0);
+    }
   });
 });
